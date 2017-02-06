@@ -1,0 +1,29 @@
+ch 3
+====
+
+Ex 3.2.4
+Each S_i has 3 + 3.|S_{i-1}| + (|S_{i-1}| permute 3)
+nPr = n! / (n-r)!
+So:
+S_1 = 3
+S_2 = 3 + 9 + 3! = 18
+S_3 = 3 + 54 + 4896 = 4953
+
+EDIT: No! the t_i's do not have to be distinct. Actual answer is
+Each S_i has 3 + 3.|S_{i-1}| + |S_{i-1}|^3
+So:
+S_1 = 3
+S_2 = 3 + 9 + 3^3 = 39
+S_3 = 3 + 117 + 59319 = 59439
+
+-----
+Ex 3.2.5
+By induction:
+S_0 is a subset of S_1 - trivial; the empty set is a subset of every set.
+Given S_{i-1} is a subset of S_i,
+every t_i in s_{i-1} is also in S_i.
+So every element of S_i constructed from those t_i will also appear in S_{i+1}
+(and {true, false, 0} is a subset of every S_i)
+
+
+
