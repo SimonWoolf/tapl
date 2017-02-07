@@ -8,3 +8,6 @@ no evaluation rule applies to it -- there is no t' such that t -> t'
 
 ->*
 Multi-step evaluation (reflexive transitive closure of one-step evaluation)
+
+
+nb -- a derivation tree is only for a single step t -> t'. Can be a big tree because congruence rules can nest, even though every branch bottoms out at a single axiom
