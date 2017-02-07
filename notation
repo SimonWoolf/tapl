@@ -1,0 +1,10 @@
+notation
+
+t -> t'
+t evaluates to t'
+
+t is in 'normal form':
+no evaluation rule applies to it -- there is no t' such that t -> t'
+
+->*
+Multi-step evaluation (reflexive transitive closure of one-step evaluation)
