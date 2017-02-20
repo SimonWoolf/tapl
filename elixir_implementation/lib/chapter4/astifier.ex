@@ -13,8 +13,7 @@ defmodule Tapl.Chapter4.Astifier do
     |> List.flatten
   end
 
-  def from_ast(term) when is_atom(term) do
-    to_charlist(term)
-  end
+  def from_ast(term) when is_atom(term), do: to_charlist(term)
+  def from_ast(term) when is_list(term), do: term
 end
 

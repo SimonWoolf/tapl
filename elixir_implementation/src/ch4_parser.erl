@@ -324,7 +324,7 @@ yeccpars2_2_(__Stack0) ->
 yeccpars2_3_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
-   false
+   "false"
   end | __Stack].
 
 -compile({inline,yeccpars2_8_/1}).
@@ -332,7 +332,7 @@ yeccpars2_3_(__Stack0) ->
 yeccpars2_8_(__Stack0) ->
  [__1 | __Stack] = __Stack0,
  [begin
-   true
+   "true"
   end | __Stack].
 
 -compile({inline,yeccpars2_9_/1}).

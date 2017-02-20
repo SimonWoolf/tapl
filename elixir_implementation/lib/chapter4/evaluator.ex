@@ -7,9 +7,9 @@ defmodule Tapl.Chapter4.Evaluator do
   # expanded out at compile-time
   def eval_term_onestep(term) do
     case term do
-      {:if, true, :then, t2, :else, t3} ->
+      {:if, 'true', :then, t2, :else, t3} ->
         t2
-      {:if, false, :then, t2, :else, t3} ->
+      {:if, 'false', :then, t2, :else, t3} ->
         t3
       {:if, t1, :then, t2, :else, t3} ->
         {:if, eval_term_onestep(t1), :then, t2, :else, t3}
@@ -22,9 +22,9 @@ defmodule Tapl.Chapter4.Evaluator do
       {:pred, t1} ->
         {:pred, eval_term_onestep(t1)}
       {:iszero, :'0'} ->
-        true
+        'true'
       {:iszero, {:succ, nv1}} when is_numeric_val(nv1, 10) ->
-        false
+        'false'
       {:iszero, t1} ->
         {:iszero, eval_term_onestep(t1)}
       other ->
