@@ -10,4 +10,22 @@ defmodule Tapl.Chapter4.Guards do
        end
     end
   end
+
+  defmacro bigstep_rule(term, clauses) do
+    tests = Enum.map(clauses, fn(clause) -> bigstep_helper(term, clause) end)
+    quote do
+      cond do
+        unquote(List.flatten(tests))
+      end
+    end
+  end
+
+  defp bigstep_helper(term, c = {match, prerequisite}) do
+    quote do
+      match?(unquote(match), unquote(term)) &&
+        (unquote(match) = unquote(term))    &&
+        (result = unquote(prerequisite))    &&
+        result -> result
+    end
+  end
 end
