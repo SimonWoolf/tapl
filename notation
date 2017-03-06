@@ -9,5 +9,33 @@ no evaluation rule applies to it -- there is no t' such that t -> t'
 ->*
 Multi-step evaluation (reflexive transitive closure of one-step evaluation)
 
-
 nb -- a derivation tree is only for a single step t -> t'. Can be a big tree because congruence rules can nest, even though every branch bottoms out at a single axiom
+
+--
+===============
+lambda calculus
+===============
+
+λx.y is λ(x) = y
+
+y z is y applied to z
+
+application is left-associative:
+s t u = (s t) u
+
+bodies of lambda abstractions are taken 'as far to the right' as you can
+λx.λy.x y = λx.(λy.(x y)), not λx.((λy.x) y)
+
+The only 'inference rule' is 'beta reduction'
+(λx.t_12) t_2 = [x -> t_2]t_12
+i.e. replace x by t_2 in the body of t_12
+the left hand side is a 'redex' (reducible expression)
+
+evaluation strategies
+=====================
+
+'full beta-reduction' - can reduce any redex at any time. (Problem: not guaranteed uniqueness, so evaluation is not a partial function)
+'normal-order evaluation' - start from the leftmost (ie outermost) redex
+'call by name' - like normal-order, but you can't reduce inside the body of a function.
+(Haskell uses a variant of this called 'lazy evaluation' - first time an arg is evaluated all occurances of that arg are replaced by the result. I.e abstract syntax graph rather than tree)
+'call by value' - evaluate outermost, but evaluate all arguments first (so only evaluate a redex after its right-hand side is an irreducible value). (Note: only the arguments, not bodies). (what SICP calls applicative-order evaluation)
