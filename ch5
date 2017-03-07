@@ -1,0 +1,9 @@
+chapter 5
+=========
+Ex 5.2.1
+or = λa.λb.a tru b
+not = λa.a fls tru
+
+Ex 5.2.2
+succ = λn.λf.λx.f (n f x)
+altsucc = λn.λf.λx.n f (f x)

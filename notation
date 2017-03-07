@@ -31,6 +31,10 @@ The only 'inference rule' is 'beta reduction'
 i.e. replace x by t_2 in the body of t_12
 the left hand side is a 'redex' (reducible expression)
 
+'closed' term has no free variables
+'combinator' is a closed term
+e.g λx.x, i.e. the identity function
+
 evaluation strategies
 =====================
 
@@ -39,3 +43,43 @@ evaluation strategies
 'call by name' - like normal-order, but you can't reduce inside the body of a function.
 (Haskell uses a variant of this called 'lazy evaluation' - first time an arg is evaluated all occurances of that arg are replaced by the result. I.e abstract syntax graph rather than tree)
 'call by value' - evaluate outermost, but evaluate all arguments first (so only evaluate a redex after its right-hand side is an irreducible value). (Note: only the arguments, not bodies). (what SICP calls applicative-order evaluation)
+
+Currying
+========
+
+instead of f = λ(x, y).s, do f = λx.λy.s.
+Then have
+f v w
+= (f v) w
+= λy.[x->v]s w
+= [x->v][y->w]s
+
+Church booleans
+===============
+tru = λt.λf.t
+fls = λt.λf.f
+combinators:
+test = λb.λi.λe.b i e
+(so `test bool iftrue else` evaluates as expected)
+and = λa.λḃ.a b fls
+or = λa.λb.a tru b
+not = λa.a fls tru
+
+Pairs:
+pair = λx.λy.λb.b x y
+fst = λp.p tru
+snd = λp.p fls
+
+Church numerals
+===============
+zero = λf.λx.x
+one = λf.λx.f x
+two = λf.λx.f (f x)
+etc
+
+succ = λn.λf.λx.f (n f x)
+altsucc = λn.λf.λx.n f (f x)
+
+plus = λn.λm.λḟ.λx.n f (m f x)
+times = λn.λm.n (plus m) zero
+alttimes = wip
