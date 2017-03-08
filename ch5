@@ -7,3 +7,41 @@ not = λa.a fls tru
 Ex 5.2.2
 succ = λn.λf.λx.f (n f x)
 altsucc = λn.λf.λx.n f (f x)
+
+Ex 5.2.3
+alttimes = λn.λm.λx.n (m f) x
+(each of the f's in n substitutes all the f's in m)
+
+Ex 5.2.4
+exp = λn.λm.n m
+(each of the f's in m substitutes for n itself, which is an n-ifier)
+
+Ex 5.2.5
+sub = λa.λb.λf.λx. a prd (b f x)
+came up with ^, but book notes this can be written more compactly as
+λa.λb.λf. a prd (b f)
+or better still
+λa.λb. a prd b
+
+Ex 5.2.6
+O(n) -- need to generate all pairs from 0 to n
+
+Ex 5.2.7
+equal = λa.λb. and (iszero (sub a b)) (iszero (sub b a))
+(need to test both ways round as sub is actuall max(a-b, 0))
+
+(book solution uses (a prd b) instead of (sub a b), which is less intuitive but
+equivalent, by substituting defn of sub)
+
+Ex 5.2.8
+
+nil = λproc.λinitial. initial
+(same as zero and false :) )
+cons = λhead.λtail.λproc. proc head (tail proc)
+(book has λhead.λtail.λproc.λinit. proc head (tail proc init), but pretty sure that's equivalent)
+isnil = λlist. list (λitem.λacc fls) tru
+head = λlist. (λitem.λacc. item) nil
+
+tail = λlist. (λitem.λacc. test (isnil acc) item acc) nil
+i.e. pick the element just before the initial, which is the tail.
+much simpler than the book solutino, but only works as long as the list doesn't contain any nils....

@@ -42,7 +42,7 @@ evaluation strategies
 'normal-order evaluation' - start from the leftmost (ie outermost) redex
 'call by name' - like normal-order, but you can't reduce inside the body of a function.
 (Haskell uses a variant of this called 'lazy evaluation' - first time an arg is evaluated all occurances of that arg are replaced by the result. I.e abstract syntax graph rather than tree)
-'call by value' - evaluate outermost, but evaluate all arguments first (so only evaluate a redex after its right-hand side is an irreducible value). (Note: only the arguments, not bodies). (what SICP calls applicative-order evaluation)
+'call by value' - liek call by name (so you can't evaluate inside the body of an abstraction), but evaluate all arguments first (so only evaluate a redex after its right-hand side is an irreducible value). (what SICP calls applicative-order evaluation)
 
 Currying
 ========
@@ -82,4 +82,72 @@ altsucc = λn.λf.λx.n f (f x)
 
 plus = λn.λm.λḟ.λx.n f (m f x)
 times = λn.λm.n (plus m) zero
-alttimes = wip
+alttimes = λn.λm.λx.n (m f) x
+because n is an nifier
+(or λn.λm.λx.n (m f) x)
+
+my notes from SICP section on church numerals:
+--
+three is a threeifier, a thing that makes 'do f'
+into 'do f.f.f' (. = function composition).
+
+So addition: a + b -> \f -> ( \x -> a(f)( b(f)(x)) )
+(do the f's from b to x, then the f's from a)
+multiplication: a*b -> \f -> ( a(b(f)) )
+(each of the f's in b substitutes all the f's in a)
+(i.e. a.b where . = function composition)
+exponentiation: a^b -> (b(a))
+(each of the f's in b substitutes for a itself -- i.e.
+a 'threeifier')
+tetration: ...?
+--
+
+iszero = λn. n (λx.fls) tru
+
+
+prd = λn. fst (n (λp. pair (snd p) (succ (snd p))) (pair zero zero))
+i.e. this creates 'double numerals' of pairs (c_i c_{i+1}) (with zero = c_0
+c_0), from zero up to n, then picks the first of the last pair.
+
+sub = λa.λb.λf.λx. a prd (b f x)
+or
+λa.λb.λf. a prd (b f)
+or
+λa.λb. a prd b
+(remember left-associative, so this is `(a prd) b`)
+need to think about this
+
+equal = λa.λb. and (iszero (a prd b)) (iszero (b prd a))
+
+Lists
+=====
+lists can be represented by their right-fold fn, e.g.
+[a, b, c] becomes
+λproc.λinitial. proc a (proc b (proc c initial))
+
+nil = λproc.λinitial. initial
+(same as zero and false :) )
+
+cons = λhead.λtail.λproc. proc head (list proc)
+
+isnil = λlist. list (λitem.λacc fls) tru
+
+head = λlist. (λitem.λacc. item) nil
+
+tail = λlist. (λitem.λacc. test (isnil acc) item acc) nil
+i.e. pick the element just before the initial, which is the tail.
+this works as long as the list doesn't contain any nils....
+
+Recursion
+=========
+
+The divergent combinator
+omega = (λx. x x)(λx. x x)
+can't be evaluated to a normal form -- reducing it gives omega again
+
+fix = λf. (λx. f (λy. x x y)) (λx. f (λy. x x y))
+a fixed-point combinator
+
+given some recursively-defined function f
+define g = λf.<body containing f>
+then h = fix g
