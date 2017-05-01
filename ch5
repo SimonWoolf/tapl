@@ -45,3 +45,31 @@ head = λlist. (λitem.λacc. item) nil
 tail = λlist. (λitem.λacc. test (isnil acc) item acc) nil
 i.e. pick the element just before the initial, which is the tail.
 much simpler than the book solutino, but only works as long as the list doesn't contain any nils....
+
+Ex 5.2.9
+defn of g used a primitive if because...?
+book answer:
+because it short-circuits, test doesn't! we need to shortcircuit or the base case never bottoms-out
+with test, wrap in a dummy lambda, only evaluate after the test
+g = \fct. \n. (test (equal n c_0) \d.c_1 \d.(times n (fct (prd n)))) c_0
+
+Ex 5.2.10
+churchnat = \n.\f.\x. (compose f n) x
+compose = fix \com.\f.\n.if (iszero n) then id else (f (com f (pred n))))
+does that even work? not certain. in any case, unnecessarily indirect -- book solution uses the abstractions we have for church numerals (scc for church nums, pred for primitives), doesn't depend on their implementation.
+
+book solution is (note that f is the combinator self-ref, *not* the same f as mine)
+cn = \f.\n.if (iszero m) then c_0 else scc (f (pred m))
+churchnat = fix cn
+
+Ex 5.2.11
+want to sum a list of church numerals. list is just a fn that takes a proc and initial. So isn't this just
+sum = \list.list add c_0
+? why does it need to be recursive?
+
+answer: it doesn't, book just wanted it done both ways. attempt at a recursive way with fix:
+sum = fix \f.\list.(test (isnil (tail list)) (head list) (add (head list) (f (tail list))))
+
+book answer differs in two ways:
+- tested list for nil rather than tail list (and returned c_0 if so) -- equivalent, theirs is probably more elegant
+- wrapped the returned values in a dummy lambda (and applied the output of test to a dummy variable) so that the if short-circuited! forgot about that.

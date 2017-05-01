@@ -42,7 +42,7 @@ evaluation strategies
 'normal-order evaluation' - start from the leftmost (ie outermost) redex
 'call by name' - like normal-order, but you can't reduce inside the body of a function.
 (Haskell uses a variant of this called 'lazy evaluation' - first time an arg is evaluated all occurances of that arg are replaced by the result. I.e abstract syntax graph rather than tree)
-'call by value' - liek call by name (so you can't evaluate inside the body of an abstraction), but evaluate all arguments first (so only evaluate a redex after its right-hand side is an irreducible value). (what SICP calls applicative-order evaluation)
+'call by value' - like call by name (so you can't evaluate inside the body of an abstraction), but evaluate all arguments first (so only evaluate a redex after its right-hand side is an irreducible value). (what SICP calls applicative-order evaluation)
 
 Currying
 ========
